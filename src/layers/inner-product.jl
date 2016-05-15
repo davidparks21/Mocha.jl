@@ -65,7 +65,7 @@ type InnerProductLayerState <: LayerState
     if shared_params != nothing
       @assert length(shared_params) == 2
       @assert shared_params[1].name == "weight" && shared_params[2].name == "bias"
-      @assert size(shared_params[1].blob) == (fea_size, out_dim)
+      @assert size(shared_params[1].blob) == (fea_size, out_dim) "Dimension mismatch, shared_params [$(shared_params[1].blob)], feature size x output dim [$( (fea_size,out_dim) )]"
       @assert eltype(shared_params[1].blob) == data_type
       @assert size(shared_params[2].blob) == (out_dim, 1)
       @debug("InnerProductLayer($(layer.name)): sharing weights and bias")
@@ -166,4 +166,3 @@ function backward(backend::CPUBackend, state::InnerProductLayerState, inputs::Ve
     end
   end
 end
-
